@@ -10,6 +10,7 @@ namespace Technico.Models;
 
 public class Owner
 {
+    public int Id { get; set; } // Primary Key 
     public int VATNumber { get; set; } // 9 Digits Only
     public string Name { get; set; }
     public string Surname { get; set; }
@@ -19,17 +20,6 @@ public class Owner
     public string Password { get; set; }
     public string UserType { get; set; } // e.g., homeowner, service provider,
 
-    public string GetAccountDetails()
-    {
-        return $"Owner Details:\n" +
-               $"Name: {Name}\n" +
-               $"Surname: {Surname}\n" +
-               $"VAT Number: {VATNumber}\n" +
-               $"Email: {Email}\n" +
-               $"Phone Number: {PhoneNumber}\n" +
-               $"User Type: {UserType}";
-    }
-
     public static List<Owner> RegisteredOwners = new List<Owner>();
 
     public static void AddOwner(Owner owner)
@@ -37,45 +27,54 @@ public class Owner
         RegisteredOwners.Add(owner);
     }
 
-    public static Owner FindOwner(string email, string password)
-    {
-        return RegisteredOwners.FirstOrDefault(o => o.Email == email && o.Password == password);
-    }
-
-    public static void PrintAllOwners()
-    {
-        foreach (var owner in RegisteredOwners)
-        {
-            Console.WriteLine(owner.GetAccountDetails());
-        }
-    }
-
-    public static bool AdminExists()
-    {
-        return RegisteredOwners.Any(o => o.UserType == "Admin");
-    }
-
     static Owner() {
-        if (!AdminExists())
+        
+        Owner admin = new Owner()
         {
+            Id=0,
+            VATNumber = 123456789,
+            Name = "Antonis",
+            Surname = "Christidis",
+            Address = "M. Karaoli",
+            PhoneNumber = 6978943936,
+            Email = "admin",
+            Password = "admin",
+            UserType = "Admin"
+        };
 
-            Owner admin = new Owner()
-            {
-                VATNumber = 123456789,
-                Name = "Antonis",
-                Surname = "Christidis",
-                Address = "M. Karaoli",
-                PhoneNumber = 6978943936,
-                Email = "admin",
-                Password = "admin",
-                UserType = "Admin"
-            };
+        AddOwner(admin);
 
-            AddOwner(admin);
+        Owner homeOwner = new Owner()
+        {
+            Id = 1,
+            VATNumber = 111222333,
+            Name = "Giorgos",
+            Surname = "Giorgakis",
+            Address = "Papandreou",
+            PhoneNumber = 6987654321,
+            Email = "gior",
+            Password = "gos",
+            UserType = "Home Owner"
+        };
 
-        }
+        AddOwner(homeOwner);
+
+        Owner serviceProvider = new Owner()
+        {
+            Id = 2,
+            VATNumber = 999999333,
+            Name = "Pavlos",
+            Surname = "Papadopoulos",
+            Address = "Sugkrou",
+            PhoneNumber = 6911224466,
+            Email = "pav",
+            Password = "los",
+            UserType = "Service Provider "
+        };
+
+        AddOwner(serviceProvider);
+
     }
-    
 }
 
 
