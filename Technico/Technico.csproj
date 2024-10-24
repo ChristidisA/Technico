@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Folder Include="Methods\Property Repair\" />
-    <Folder Include="Methods\PropertyItem\" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@ namespace Technico.Methods.Account;
 
 public class SingIn
 {
-    public static void Execute()
+    public static void Execute()  // Log in
     {
         Console.Clear();
         Console.WriteLine("Sign In Menu");
@@ -29,13 +29,13 @@ public class SingIn
             Console.Write("Type your password: ");
             password = Console.ReadLine();
 
-            Owner foundOwner = FindOwner.ByMailPass(username, password);
+            Owner loggedInOwner = FindOwner.ByMailPass(username, password);
 
-            if (foundOwner != null)
+            if (loggedInOwner != null)
             {
                 Console.WriteLine("Login Successful!");
-                Console.WriteLine(AccountDetails.Get(foundOwner));
-                WhoIsLogged.Execute(foundOwner);
+                Console.WriteLine(AccountDetails.Get(loggedInOwner));
+                WhoIsLogged.Execute(loggedInOwner);
                 break;
             }
             else

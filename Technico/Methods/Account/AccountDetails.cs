@@ -10,7 +10,7 @@ namespace Technico.Methods.Account;
 
 public class AccountDetails
 {
-    public static string Get(Owner owner)
+    public static string Get(Owner owner)  // returns owner
     {
         return $"Owner Details:\n" +
                $"ID: {owner.Id}\n" +
@@ -22,19 +22,8 @@ public class AccountDetails
                $"User Type: {owner.UserType}";
     }
 
-
-    public static void PrintAllUsers()
+    public static void DiplayUserDetails(int id)  // Display user details by id
     {
-        foreach (var owner in Owner.RegisteredOwners)
-        {
-            Console.WriteLine($"Owner Details: ID: {owner.Id} Name: {owner.Name} Surname: " +
-            $"{owner.Surname} VAT Number: {owner.VATNumber} Email: {owner.Email} Phone Number: " +
-            $"{owner.PhoneNumber} User Type: {owner.UserType}");
-        }
-    }
-
-
-    public static void DiplayUserDetails(int id) {
         Owner owner = FindOwner.ById(id);
         if (owner != null) // Check if the owner was found
         {
@@ -46,5 +35,19 @@ public class AccountDetails
             Console.WriteLine("Owner not found.");
         }
     }
+
+
+    public static void PrintAllUsers()  // Prints all users
+    {
+        foreach (var owner in Owner.RegisteredOwners)
+        {
+            Console.WriteLine($"Owner Details: ID: {owner.Id} Name: {owner.Name} Surname: " +
+            $"{owner.Surname} VAT Number: {owner.VATNumber} Email: {owner.Email} Phone Number: " +
+            $"{owner.PhoneNumber} User Type: {owner.UserType}");
+        }
+    }
+
+
+
 
 }

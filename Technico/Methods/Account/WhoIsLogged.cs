@@ -10,12 +10,12 @@ namespace Technico.Methods.Account;
 public class WhoIsLogged
 {
 
-    public static void Execute(Owner loggedInOwner)
+    public static void Execute(Owner loggedInOwner) // this method is called when someone had logged in so it can verify that the user exists
     {
         Console.Clear();
         if (loggedInOwner != null)
         {
-            Console.WriteLine($"Logged in user: {loggedInOwner.Name} {loggedInOwner.Surname}");
+            Console.WriteLine($"Logged in user: {loggedInOwner.Name} {loggedInOwner.Surname}"); 
         }
         else
         {

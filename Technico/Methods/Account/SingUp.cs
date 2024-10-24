@@ -10,17 +10,16 @@ namespace Technico.Methods.Account;
 
 public class SingUp
 {
-    public static void Execute()
+    public static void Execute()     // Creates an account
     {
-        Console.Clear();
         Console.WriteLine("Sign Up Menu");
         string registerinfo;
 
 
         Owner owner = new Owner();
 
-        registerinfo = ValidateVATNumber.Execute();
-        owner.VATNumber = int.Parse(registerinfo);
+        registerinfo = ValidateVATNumber.Execute();   // Validates if VAT number is 9 digit number and not a string or null
+        owner.VATNumber = int.Parse(registerinfo);      // It also checks if the VAT numkber already exists
         Console.Write("Please type your name: ");
         owner.Name = Console.ReadLine();
         Console.Write("Please type your surname: ");
@@ -28,7 +27,7 @@ public class SingUp
         Console.Write("Please type your address: ");
         owner.Address = Console.ReadLine();
         Console.WriteLine("Please enter your phone number (only digits):");
-        registerinfo = ValidatePhoneNumber.Execute();
+        registerinfo = ValidatePhoneNumber.Execute();   // Validates that it is an integer
         owner.PhoneNumber = long.Parse(registerinfo);
         Console.Write("Please type your email: ");
         owner.Email = Console.ReadLine();
@@ -39,6 +38,6 @@ public class SingUp
         Owner.AddOwner(owner);
         Console.Clear();
         Console.WriteLine("Account Registration Success");
-        Console.WriteLine(AccountDetails.Get(owner));
+        Console.WriteLine(AccountDetails.Get(owner));  // Returns the account details that was just created
     }
 }

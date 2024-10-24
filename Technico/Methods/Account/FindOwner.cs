@@ -9,13 +9,13 @@ namespace Technico.Methods.Account;
 
 public class FindOwner
 {
-    public static Owner ById(int id)
+    public static Owner ById(int id) // Finds owner by id
     {
         return Owner.RegisteredOwners.FirstOrDefault(o => o.Id == id);
     }
 
-    public static Owner ByMailPass(string email, string password)
-    {
+    public static Owner ByMailPass(string email, string password) // Finds owner by email and password (both have to be correct) 
+    {                                                               // It works like a log in function
         return Owner.RegisteredOwners.FirstOrDefault(o => o.Email == email && o.Password == password);
     }
 

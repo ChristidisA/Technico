@@ -20,14 +20,14 @@ public class Owner
     public string Password { get; set; }
     public string UserType { get; set; } // e.g., homeowner, service provider,
 
-    public static List<Owner> RegisteredOwners = new List<Owner>();
+    public static List<Owner> RegisteredOwners = new List<Owner>();     // Creates a list
 
-    public static void AddOwner(Owner owner)
+    public static void AddOwner(Owner owner) // Adds an owner object in the Registered Owners List
     {
         RegisteredOwners.Add(owner);
     }
 
-    static Owner() {
+    static Owner() {   // Creates some random users
         
         Owner admin = new Owner()
         {
