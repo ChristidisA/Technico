@@ -2,30 +2,42 @@
 using Technico.Methods.Account;
 using Technico.Methods.PropertyItem;
 using Technico.Models;
+using System.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Technico.Methods.Property_Item;
 
-Console.WriteLine("Welcome to Technico");
+var context = new AppDbContext();
+var fakedata = new FakeData(context);
+fakedata.SeedProperties();
+fakedata.SeedOwners();
+
+    Console.WriteLine("Welcome to Technico");
 
 // ------------------------- Property Owner Services -----------------------------------------------------------------
 
 //SingUp.Execute();    //Creates account
 //SingIn.Execute();  //Logs In the account
 
-//Owner foundOwner = FindOwner.ByMailPass("admin", "admin"); //  Finds if someone is exists by username and password
-//Console.WriteLine(AccountDetails.Get(foundOwner));  // Prints a users details if you give the object 
+//FindOwner.AuthenticateOwner("admin","admin");  //Authenticates the credentials of a user
 
-//Owner loggedInOwner = FindOwner.ByMailPass("admin", "admin");     //
-//WhoIsLogged.Execute(loggedInOwner);                               // If the the user is not registered it wont log in
+//AccountDetails.DisplayUserDetails(1);         // Displays users by id!
+//AccountDetails.PrintAllUsers();              // Prints all users!
 
-//AccountDetails.DiplayUserDetails(0);         // Displays the owner of your choice by typing his id as input
+// AccountHoldings.Show();                    // Enter the vat number and it will return all the properties assinged to it
 
+//UpdateAccount.Update();                    // Updates a user's information by entering his vat number
+//DeleteAccount.Delete();                   // Delets users and all his properties
 
-//AccountDetails.PrintAllUsers();         // Prints all users!
 
 // ------------------------- Property Item Services -----------------------------------------------------------------
 
 
-// PropertyDetails.View(0);       // View command  ---   Displays the propertys details
+//PropertyDetails.View(1);       // View command  ---   Displays the propertys details based on the id you give it
 
- //CreateProperty.Create();       // Create command ---- Submits a new property in the system
+//CreateProperty.Create();       // Create command ---- Submits a new property in the system
 
+//DeleteProperty.Delete();         // Deletes a property if you give the correct vat number and address
+
+//UpdateProperty.Update(1);         // Updates a property's information - Use PropertyId to select the property
 

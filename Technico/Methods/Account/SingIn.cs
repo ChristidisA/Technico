@@ -35,7 +35,6 @@ public class SingIn
             {
                 Console.WriteLine("Login Successful!");
                 Console.WriteLine(AccountDetails.Get(loggedInOwner));
-                WhoIsLogged.Execute(loggedInOwner);
                 break;
             }
             else

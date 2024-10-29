@@ -13,7 +13,7 @@ public class AccountDetails
     public static string Get(Owner owner)  // returns owner
     {
         return $"Owner Details:\n" +
-               $"ID: {owner.Id}\n" +
+               $"Id: {owner.Id}\n" +
                $"Name: {owner.Name}\n" +
                $"Surname: {owner.Surname}\n" +
                $"VAT Number: {owner.VATNumber}\n" +
@@ -22,32 +22,36 @@ public class AccountDetails
                $"User Type: {owner.UserType}";
     }
 
-    public static void DiplayUserDetails(int id)  // Display user details by id
+    public static void DisplayUserDetails(int id) // Display user details by id
     {
-        Owner owner = FindOwner.ById(id);
-        if (owner != null) // Check if the owner was found
+        using (var context = new AppDbContext()) // Create instance inside the method
         {
-            // Print owner details
-            Console.WriteLine(AccountDetails.Get(owner)); // Print the result of AccountDetails.Get
-        }
-        else
-        {
-            Console.WriteLine("Owner not found.");
-        }
+            var owner = context.Owners.Find(id); // Fetch the owner from the database by ID
+            if (owner != null) // Check if the owner was found
+            {
+                Console.WriteLine(Get(owner)); // Print the result of Get
+            }
+            else
+            {
+                Console.WriteLine("Owner not found.");
+            }
+        } // Automatically disposed of here
     }
 
-
-    public static void PrintAllUsers()  // Prints all users
+    public static void PrintAllUsers() // Prints all users
     {
-        foreach (var owner in Owner.RegisteredOwners)
+        using (var context = new AppDbContext()) // Create instance inside the method
         {
-            Console.WriteLine($"Owner Details: ID: {owner.Id} Name: {owner.Name} Surname: " +
-            $"{owner.Surname} VAT Number: {owner.VATNumber} Email: {owner.Email} Phone Number: " +
-            $"{owner.PhoneNumber} User Type: {owner.UserType}");
-        }
+            var owners = context.Owners.ToList(); // Fetch all owners from the database
+            Console.WriteLine("Here are all the users:");
+            foreach (var owner in owners)
+            {
+                Console.WriteLine($"Name: {owner.Name} Surname: " +
+                $"{owner.Surname} VAT Number: {owner.VATNumber} Email: {owner.Email} Phone Number: " +
+                $"{owner.PhoneNumber} User Type: {owner.UserType}");
+            }
+        } // Automatically disposed of here
     }
-
-
-
 
 }
+

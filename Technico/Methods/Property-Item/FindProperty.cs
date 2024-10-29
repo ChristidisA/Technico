@@ -10,9 +10,12 @@ namespace Technico.Methods.PropertyItem;
 
 public  class FindProperty
 {
-    public static Property ById(int id) {   // Finds the property based on the id that you give it
-        return Property.RegisteredProperties.FirstOrDefault(o => o.PropertyId == id);
+    public static Property ById(int id)
+    {   // Finds the property based on the id that you give it
+        using (var context = new AppDbContext())
+        {
+            return context.Properties.FirstOrDefault(o => o.PropertyId == id);
+        }
     }
-
 
 }

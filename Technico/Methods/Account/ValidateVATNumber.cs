@@ -7,8 +7,10 @@ public class ValidateVATNumber
 {
     public static string Execute()
     {
-        string userInput;
-        bool isValid;
+        using (var context = new AppDbContext())
+        { 
+            string userInput;
+            bool isValid;
 
         // Prompt the user for their VAT number
         Console.WriteLine("Please enter your VAT number:");
@@ -24,7 +26,7 @@ public class ValidateVATNumber
             }
             else { 
                 int vatNumber = int.Parse(userInput);
-                if (Owner.RegisteredOwners.Any(o => o.VATNumber == vatNumber)) {  
+                if (context.Owners.Any(o => o.VATNumber == vatNumber)) {  // Checks inside the database if there is a user with that Vat nubmer
                     Console.WriteLine("This Vat number is already registered. Please enter a different one.");
                     isValid = false;                        // Checks if there is an owner inside RegisteredOwners that has the Vat number
                 }                                              // that was given in the userinput
@@ -35,13 +37,16 @@ public class ValidateVATNumber
         return userInput; // Return the valid VAT number
     }
 
+        
+    }
+
     public static string Rules() // This method validates the Vat number when creating a property
     {
         string userInput;
         bool isValid;
 
         // Prompt the user for their VAT number
-        Console.WriteLine("Please enter your VAT number:");
+        Console.WriteLine("Please enter the VAT number:");
         do
         {
             userInput = Console.ReadLine();
@@ -58,4 +63,26 @@ public class ValidateVATNumber
         return userInput; // Return the valid VAT number
     }
 
+    
+
+        public static string New(string vatnum) // This method validates the Vat number when creating a property
+        {
+            string userInput;
+            bool isValid;
+
+            // Prompt the user for their VAT number
+            Console.Write("New Owner VAT Number: ");
+            userInput = vatnum;
+            do
+            {                
+                // Validate the VAT number directly within this method
+                isValid = userInput.Length == 9 && int.TryParse(userInput, out _);
+                if (!isValid)
+                {
+                    Console.WriteLine("Please write a valid 9 digit number.");
+                    userInput = Console.ReadLine();
+                }
+            } while (!isValid);
+        return userInput; // Return the valid VAT number
+    }
 }
