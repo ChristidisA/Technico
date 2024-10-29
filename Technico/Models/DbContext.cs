@@ -12,6 +12,7 @@ namespace Technico.Models;
 
         public DbSet<Owner> Owners { get; set; }
         public DbSet<Property> Properties { get; set; }
+        public DbSet<Repair> Repairs { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

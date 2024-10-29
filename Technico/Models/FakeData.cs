@@ -16,6 +16,7 @@ public class FakeData
         _context.Database.EnsureCreated();
         SeedOwners();
         SeedProperties();
+        SeedRepairs();
     }
 
 
@@ -120,6 +121,46 @@ public class FakeData
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+    }
+
+    public void SeedRepairs() {
+        using (var context = new AppDbContext()) 
+        {
+            if (!_context.Repairs.Any())
+            {
+                Repair repair1 = new Repair
+                {
+                    Date = DateTime.Now.Date,
+                    repairDescription = "Electrical Damage",
+                    repairAddress = "Papandreou 10",
+                    status = RepairStatus.InProgress,
+                    repairCost = 103.24f ,
+                    ownerVat = 123456789
+
+                };
+                _context.Repairs.Add(repair1);
+
+                Repair repair2 = new Repair
+                {
+                    Date = DateTime.Now.Date,
+                    repairDescription = "Painting",
+                    repairAddress = "Ionos Dragoumi",
+                    status = RepairStatus.Pending,
+                    repairCost = 50.10f,
+                    ownerVat = 111222333
+
+                };
+                _context.Repairs.Add(repair2);
+                try
+                {
+                    _context.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
             }
         }
     }

@@ -6,11 +6,13 @@ using System.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Technico.Methods.Property_Item;
+using Technico.Methods.Property_Repair;
 
 var context = new AppDbContext();
 var fakedata = new FakeData(context);
 fakedata.SeedProperties();
 fakedata.SeedOwners();
+fakedata.SeedRepairs();
 
     Console.WriteLine("Welcome to Technico");
 
@@ -39,5 +41,19 @@ fakedata.SeedOwners();
 
 //DeleteProperty.Delete();         // Deletes a property if you give the correct vat number and address
 
-//UpdateProperty.Update(1);         // Updates a property's information - Use PropertyId to select the property
+//UpdateProperty.Update(5);         // Updates a property's information - Use PropertyId to select the property
+
+
+// ------------------------- Property Repair Services -----------------------------------------------------------------
+
+//RepairCreation.Create();              // Creates a repair only if the vat number and the repairAddress match an existing home
+
+// AccountRepairs.ShowAll();             // Shows all repair records that are programmed for a certain user
+
+// RepairUpdate.Update(2);               // Updates a repair records based on the id that is given
+
+//  RepairDelete.Delete(5);              // Deletes a repair record based on the id that is given
+
+// RepairSearch.Search(1);                // Searches and prints  a specific repair record
+// RepairSearch.All();                    // Searches and prints all repair records
 
