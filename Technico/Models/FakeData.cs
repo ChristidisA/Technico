@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 namespace Technico.Models;
 
 public class FakeData
-{ 
+{
     private readonly AppDbContext _context;
-    
-    public FakeData(AppDbContext context) 
+
+    public FakeData(AppDbContext context)
     {
         _context = context;
         _context.Database.EnsureCreated();
-        SeedOwners();
-        SeedProperties();
-        SeedRepairs();
+        // Seed data only if the database is empty
+        if (!_context.Owners.Any() && !_context.Properties.Any() && !_context.Repairs.Any())
+        {
+            SeedOwners();
+            SeedProperties();
+            SeedRepairs();
+        }
     }
 
 
@@ -125,8 +129,9 @@ public class FakeData
         }
     }
 
-    public void SeedRepairs() {
-        using (var context = new AppDbContext()) 
+    public void SeedRepairs()
+    {
+        using (var context = new AppDbContext())
         {
             if (!_context.Repairs.Any())
             {
@@ -136,7 +141,7 @@ public class FakeData
                     repairDescription = "Electrical Damage",
                     repairAddress = "Papandreou 10",
                     status = RepairStatus.InProgress,
-                    repairCost = 103.24f ,
+                    repairCost = 103.24f,
                     ownerVat = 123456789
 
                 };
@@ -165,4 +170,3 @@ public class FakeData
         }
     }
 }
-

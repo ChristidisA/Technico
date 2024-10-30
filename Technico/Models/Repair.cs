@@ -21,5 +21,8 @@ public class Repair
     public string repairAddress { get; set; }
     public  RepairStatus status { get; set; }  = RepairStatus.Pending;  // Assings the pending status
     public float repairCost { get; set; } 
+
+    // Foreign Key
     public int ownerVat { get; set; }
+    public Owner Owner { get; set; }
 }

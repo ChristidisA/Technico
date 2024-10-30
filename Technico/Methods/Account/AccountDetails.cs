@@ -13,7 +13,6 @@ public class AccountDetails
     public static string Get(Owner owner)  // returns owner
     {
         return $"Owner Details:\n" +
-               $"Id: {owner.Id}\n" +
                $"Name: {owner.Name}\n" +
                $"Surname: {owner.Surname}\n" +
                $"VAT Number: {owner.VATNumber}\n" +

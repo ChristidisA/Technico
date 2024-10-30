@@ -19,5 +19,25 @@ namespace Technico.Models;
         optionsBuilder.UseSqlServer("Data Source=localhost; Initial Catalog=Technico; Integrated Security=true; TrustServerCertificate=True;");
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Owner>()
+            .Property(o => o.VATNumber)
+            .ValueGeneratedNever(); // Ensures VATNumber is not treated as an identity column
+
+        // Relationships
+        modelBuilder.Entity<Property>()
+            .HasOne(p => p.Owner)
+            .WithMany(o => o.Properties)
+            .HasForeignKey(p => p.OwnerVATNumber)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Repair>()
+            .HasOne(r => r.Owner)
+            .WithMany(o => o.Repairs)
+            .HasForeignKey(r => r.ownerVat)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
+
 }
  // connects to the database and creates owners and properties tables

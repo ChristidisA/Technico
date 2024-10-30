@@ -24,11 +24,9 @@ namespace Technico.Migrations
 
             modelBuilder.Entity("Technico.Models.Owner", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("VATNumber")
+                        .HasMaxLength(9)
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -57,10 +55,7 @@ namespace Technico.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("VATNumber")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("VATNumber");
 
                     b.ToTable("Owners");
                 });
@@ -84,6 +79,8 @@ namespace Technico.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PropertyId");
+
+                    b.HasIndex("OwnerVATNumber");
 
                     b.ToTable("Properties");
                 });
@@ -118,7 +115,38 @@ namespace Technico.Migrations
 
                     b.HasKey("RepairId");
 
+                    b.HasIndex("ownerVat");
+
                     b.ToTable("Repairs");
+                });
+
+            modelBuilder.Entity("Technico.Models.Property", b =>
+                {
+                    b.HasOne("Technico.Models.Owner", "Owner")
+                        .WithMany("Properties")
+                        .HasForeignKey("OwnerVATNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Technico.Models.Repair", b =>
+                {
+                    b.HasOne("Technico.Models.Owner", "Owner")
+                        .WithMany("Repairs")
+                        .HasForeignKey("ownerVat")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Technico.Models.Owner", b =>
+                {
+                    b.Navigation("Properties");
+
+                    b.Navigation("Repairs");
                 });
 #pragma warning restore 612, 618
         }
