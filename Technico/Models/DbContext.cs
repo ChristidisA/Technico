@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Technico.Methods.Account;
 
 namespace Technico.Models;
 
@@ -26,11 +27,22 @@ namespace Technico.Models;
             .ValueGeneratedNever(); // Ensures VATNumber is not treated as an identity column
 
         // Relationships
-        modelBuilder.Entity<Property>()
-            .HasOne(p => p.Owner)
-            .WithMany(o => o.Properties)
-            .HasForeignKey(p => p.OwnerVATNumber)
-            .OnDelete(DeleteBehavior.Cascade);
+        // Composite key for OwnerProperty
+        modelBuilder.Entity<OwnerProperty>()
+         .HasKey(op => new { op.OwnerId, op.PropertyId });
+
+        modelBuilder.Entity<OwnerProperty>()
+            .HasOne(op => op.Owner)
+            .WithMany(o => o.OwnerProperties)
+            .HasForeignKey(op => op.OwnerId)
+            .OnDelete(DeleteBehavior.Restrict); // Change to Restrict to avoid cascading conflicts
+
+        modelBuilder.Entity<OwnerProperty>()
+            .HasOne(op => op.Property)
+            .WithMany(p => p.OwnerProperties)
+            .HasForeignKey(op => op.PropertyId)
+            .OnDelete(DeleteBehavior.Cascade); // Keep this as Cascade if you want to remove Properties
+
 
         modelBuilder.Entity<Repair>()
             .HasOne(r => r.Owner)
@@ -39,5 +51,16 @@ namespace Technico.Models;
             .OnDelete(DeleteBehavior.Cascade);
     }
 
+    public class OwnerProperty
+    {
+        public int OwnerId { get; set; }
+        public Owner Owner { get; set; }
+
+        public int PropertyId { get; set; }
+        public Property Property { get; set; }
+
+    }
+
+
 }
- // connects to the database and creates owners and properties tables
+// connects to the database and creates owners and properties tables

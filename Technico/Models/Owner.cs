@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Technico.Methods.Account;
+using static Technico.Models.AppDbContext;
 
 namespace Technico.Models;
 
@@ -24,7 +25,7 @@ public class Owner
     public string Password { get; set; }
     public string UserType { get; set; }
 
-    public ICollection<Property> Properties { get; set; }
+    public ICollection<OwnerProperty> OwnerProperties { get; set; }
     public ICollection<Repair> Repairs { get; set; }
 }
 
